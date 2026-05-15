@@ -3,17 +3,25 @@ import java.util.InputMismatchException;
 
 // 1. Custom Checked Exception Class
 // TODO: Inherit from the correct class to make this a Checked Exception.
-class InsufficientBalanceException { 
+class InsufficientBalanceException extends Exception { 
     private double balance;
     private double amount;
 
     public InsufficientBalanceException(double balance, double amount) {
         // TODO: Invoke the superclass constructor with a clear error message[cite: 289].
-        
+        super("$" + amount + " was unseccessfully withdrawn. Your current balance is $" + balance + ". ");
+
+        this.balance = balance;
+        this.amount = amount;
     }
 
-    public double getBalance() { return balance; }
-    public double getAmount() { return amount; }
+    public double getBalance() { 
+        return balance; 
+    }
+    
+    public double getAmount() { 
+        return amount; 
+    }
 }
 
 // 2. Integrated Core Class
@@ -28,21 +36,28 @@ public class BankAccount {
         return balance;
     }
 
-    public void deposit(double amount) {
-        // TODO: Validate input and throw an IllegalArgumentException if amount is <= 0[cite: 102].
-        
-        
-        balance += amount;
-        System.out.println("$" + amount + " successfully deposited.");
+    // TODO: Validate input and throw an IllegalArgumentException if amount is <= 0[cite: 102].
+    public void deposit(double amount) throws IllegalArgumentException {
+        if (amount > 0){     
+            balance += amount;
+            System.out.println("$" + amount + " was successfully deposited.");
+
+        } else {
+            throw new IllegalArgumentException("$" + amount + " was unsucessfully deposited.");
+        }
     }
+        
 
     // TODO: Add the proper exception declaration to the method signature[cite: 95].
-    public void withdraw(double amount) {
-        // TODO: Validate balance and throw your custom InsufficientBalanceException if needed[cite: 110].
-        
-        
-        balance -= amount;
-        System.out.println("$" + amount + " successfully withdrawn.");
+    // TODO: Validate balance and throw your custom InsufficientBalanceException if needed[cite: 110].
+    public void withdraw(double amount) throws InsufficientBalanceException {
+        if (amount > 0 && amount <= balance){
+            balance -= amount;
+            System.out.println("$" + amount + " was successfully withdrawn.");
+
+        } else {
+            throw new InsufficientBalanceException(balance, amount);
+        }
     }
 
     public static void main(String[] args) {
@@ -55,20 +70,44 @@ public class BankAccount {
         // --- DEPOSIT PROCESS ---
         // TODO: Wrap the deposit process in a try-catch-finally layout[cite: 34].
         // Catch InputMismatchException and IllegalArgumentException, and always display the balance[cite: 44, 151].
-        System.out.print("\nEnter the amount to DEPOSIT: ");
-        double depositAmount = input.nextDouble();
-        account.deposit(depositAmount);
-        
+
+        try{
+            System.out.print("\nEnter the amount to DEPOSIT: ");
+            double depositAmount = input.nextDouble();
+            account.deposit(depositAmount);
+
+        } catch (InputMismatchException error){
+            System.out.print("Error: Please enter numerical value. ");
+            input.nextLine();
+
+        } catch (IllegalArgumentException error){
+            System.out.println("Error: " + error.getMessage());
+
+        } finally {
+            System.out.println("Current Balance: $" + account.getBalance());
+        }
 
 
         // --- WITHDRAWAL PROCESS ---
         // TODO: Wrap the withdrawal process in a try-catch-finally layout[cite: 34].
         // Catch InputMismatchException and InsufficientBalanceException, and always display the balance[cite: 44, 151].
-        System.out.print("\nEnter the amount to WITHDRAW: ");
-        double withdrawAmount = input.nextDouble();
-        account.withdraw(withdrawAmount);
-        
 
+        try{
+            System.out.print("\nEnter the amount to WITHDRAW: ");
+            double withdrawAmount = input.nextDouble();
+            account.withdraw(withdrawAmount);
+
+        } catch (InputMismatchException error){
+            System.out.print("Error: Please enter numerical value. ");
+            input.nextLine();
+
+        } catch (InsufficientBalanceException error){
+            System.out.println("Error: " + error.getMessage());
+
+        } finally {
+            System.out.println("Current Balance: $" + account.getBalance());
+        }
+        
 
         System.out.println("\n=== Thank you for using our service ===");
         input.close();
