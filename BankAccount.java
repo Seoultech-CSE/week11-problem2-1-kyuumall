@@ -43,7 +43,7 @@ public class BankAccount {
             System.out.println("$" + amount + " successfully deposited.");
 
         } else {
-            throw new IllegalArgumentException("$" + amount + " was unsucessfully deposited.");
+            throw new IllegalArgumentException("Business Rule Violation: Deposit amount must be positive.");
         }
     }
         
