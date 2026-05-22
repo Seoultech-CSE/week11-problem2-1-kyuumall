@@ -9,7 +9,7 @@ class InsufficientBalanceException extends Exception {
 
     public InsufficientBalanceException(double balance, double amount) {
         // TODO: Invoke the superclass constructor with a clear error message[cite: 289].
-        super("$" + amount + " was unseccessfully withdrawn. Your current balance is $" + balance + ". ");
+        super("Transaction Denied: Insufficient balance. Current: $" + balance + ", Requested: $" + amount);
 
         this.balance = balance;
         this.amount = amount;
