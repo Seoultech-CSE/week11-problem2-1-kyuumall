@@ -93,7 +93,7 @@ public class BankAccount {
             account.withdraw(withdrawAmount);
 
         } catch (InputMismatchException error){
-            System.out.print("Error: Please enter numerical value. ");
+            System.out.print("Output does not match expected: Input Error: Invalid format. A numeric value is required.");
             input.nextLine();
 
         } catch (InsufficientBalanceException error){
