@@ -73,7 +73,7 @@ public class BankAccount {
             account.deposit(depositAmount);
 
         } catch (InputMismatchException error){
-            System.out.print("Output does not match expected: Input Error: Invalid format. A numeric value is required.");
+            System.out.print("Output does not match expected: Input Error: Invalid format. A numeric value is required." + "\n");
             input.nextLine();
 
         } catch (IllegalArgumentException error){
@@ -93,7 +93,7 @@ public class BankAccount {
             account.withdraw(withdrawAmount);
 
         } catch (InputMismatchException error){
-            System.out.print("Output does not match expected: Input Error: Invalid format. A numeric value is required.");
+            System.out.print("Output does not match expected: Input Error: Invalid format. A numeric value is required." + "\n");
             input.nextLine();
 
         } catch (InsufficientBalanceException error){
