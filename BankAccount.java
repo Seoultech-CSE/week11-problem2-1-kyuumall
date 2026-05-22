@@ -97,7 +97,7 @@ public class BankAccount {
             input.nextLine();
 
         } catch (InsufficientBalanceException error){
-            System.out.println("Error: " + error.getMessage());
+            System.out.println(error.getMessage());
 
         } finally {
             System.out.println("[Current Balance Status] $" + account.getBalance());
